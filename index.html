@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>匡老师退休倒计时</title>
+    <title>匡树辉老师退休倒计时</title>
     <style>
         * {
             margin: 0;
@@ -31,16 +31,16 @@
             max-width: 900px;
             width: 100%;
             border: 1px solid #222;
-            margin-bottom: 30px;
+            margin-bottom: 0px;
         }
         
         .header {
-            margin-bottom: 50px;
+            margin-bottom: 0px;
         }
         
         h1 {
             color: #2E7D32;
-            margin-bottom: 20px;
+            margin-bottom: 10px;
             font-size: 4rem;
             font-weight: 900;
             text-shadow: 
@@ -68,30 +68,88 @@
         }
         
         .target-date {
-            background: #1a1a1a;
+            position: relative;
+            background-color: rgba(26, 26, 26, 0.85);
+            height: 600px; 
             border-radius: 12px;
-            padding: 35px 25px;
-            margin-bottom: 50px;
+            padding: 0;
+            margin-bottom: 0px;
             border: 1px solid #333;
+            min-height: 300px;
+            width: 100%;
+        }
+
+        /* 固定图片层（原始图片 ksh.png） */
+        .target-date::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: url('ksh.png');
+            background-size: cover;
+            background-position: bottom;
+            background-repeat: no-repeat;
+            z-index: 2;
+            pointer-events: none;
+        }
+
+        /* 循环切换图片层 - 默认背景图（可选） */
+        .target-date::after {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-size: cover;
+            background-position: bottom;
+            background-repeat: no-repeat;
+            z-index: 1;
+            pointer-events: none;
+        }
+
+        /* 定义三个切换类，分别对应三张背景图 */
+        .target-date.bg1::after {
+            background-image: url('bcleft.png');  /* 替换为实际图片路径 */
+        }
+        .target-date.bg2::after {
+            background-image: url('bccenter.png');
+        }
+        .target-date.bg3::after {
+            background-image: url('bcright.png');
         }
         
         .target-date span {
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 90%;
+            max-width: 100%;
+            text-align: center;
+            white-space: normal;
+            word-break: break-word;
             font-size: 5rem;
             color: #66BB6A;
             font-weight: 900;
             text-shadow: 1px 1px 0 rgba(0, 0, 0, 0.1);
+            line-height: 1.2;
+            padding-bottom: 20px;
+            z-index: 3;
         }
         
         .countdown {
             display: flex;
             justify-content: center;
-            gap: 30px;
+            gap: 0px;
             flex-wrap: wrap;
-            margin-bottom: 50px;
+            margin-bottom: 0px;
         }
-        
+
         .time-unit {
-            background: #151515;
+            background: rgba(21, 21, 21, 0.85);
             border-radius: 16px;
             padding: 35px 25px;
             min-width: 160px;
@@ -102,7 +160,7 @@
             font-size: 5rem;
             font-weight: 900;
             color: #81C784;
-            margin-bottom: 10px;
+            margin-bottom: 0px;
             text-shadow: 
                 3px 3px 0 rgba(0, 0, 0, 0.1),
                 1px 1px 0 #fff,
@@ -131,7 +189,7 @@
             color: #4CAF50;
             font-weight: 300;
             display: block;
-            margin-bottom: 20px;
+            margin-bottom: 0px;
         }
         
         .music-player {
@@ -284,13 +342,6 @@
             border-left: 4px solid #4CAF50;
         }
         
-        .playlist-item.empty {
-            text-align: center;
-            color: #888;
-            font-style: italic;
-            cursor: default;
-        }
-        
         .song-actions {
             display: flex;
             gap: 10px;
@@ -366,7 +417,7 @@
             }
             
             .countdown {
-                gap: 20px;
+                gap: 0px;
             }
             
             .time-unit {
@@ -379,11 +430,14 @@
             }
 
             .target-date {
-                padding: 25px 20px;
+                min-height: 250px;
+                height: 320px;
             }
             
             .target-date span {
                 font-size: 3.5rem;
+                width: 90%;
+                padding-bottom: 15px;
             }
             
             .music-player {
@@ -416,7 +470,7 @@
             }
             
             h1 {
-                font-size: 2rem;
+                font-size: 1.8rem;
             }
             
             .time-unit {
@@ -432,8 +486,14 @@
                 font-size: 0.9rem;
             }
             
+            .target-date {
+                min-height: 200px;
+            }
+            
             .target-date span {
                 font-size: 2.2rem;
+                width: 95%;
+                padding-bottom: 10px;
             }
             
             .player-controls {
@@ -466,11 +526,11 @@
 <body>
     <div class="container">
         <div class="header">
-            <h1>退休倒计时</h1>
+            <h1>匡树辉老师退休倒计时</h1>
             <div class="subtitle">距离目标时间剩余</div>
         </div>
         
-        <div class="target-date">
+        <div class="target-date" id="targetDateContainer">
             <span id="targetDateDisplay">2027年1月30日 00:00:00</span>
         </div>
         
@@ -499,7 +559,7 @@
     </div>
     
     <div class="music-player">
-        <h2 class="player-title">🎵 退休时光音乐盒</h2>
+        <h2 class="player-title">🎵 时光音乐盒</h2>
         
         <div class="song-info">
             <div class="song-title" id="currentSongTitle">半日闲游</div>
@@ -516,16 +576,16 @@
         </div>
         
         <div class="player-controls">
-            <button class="control-btn" id="prevBtn" title="上一首">
-                <i class="fas fa-step-backward"></i>
+            <button class="control-btn" id="prevBtn" title="重新开始">
+                <i class="fas fa-redo"></i>
             </button>
             
             <button class="control-btn play-btn" id="playBtn" title="播放">
                 <i class="fas fa-play" id="playIcon"></i>
             </button>
             
-            <button class="control-btn" id="nextBtn" title="下一首">
-                <i class="fas fa-step-forward"></i>
+            <button class="control-btn" id="nextBtn" title="重新开始">
+                <i class="fas fa-redo"></i>
             </button>
         </div>
         
@@ -541,7 +601,7 @@
                         <i class="fas fa-music"></i> 倪郝(ni hao)中国第一中老年影视歌三栖搖滾组合
                     </small>
                     <div class="song-actions">
-                        <button class="action-btn delete-btn" title="删除" onclick="return false;">
+                        <button class="action-btn" title="删除" style="opacity: 0.5; cursor: not-allowed;">
                             <i class="fas fa-trash"></i>
                         </button>
                     </div>
@@ -556,18 +616,18 @@
                 <div class="selected-file-info" id="selectedFileInfo">
                     <strong>当前歌曲:</strong><br>
                     半日闲游 - 郝云&倪大红<br>
-                    <small>可以添加本地音乐文件到播放列表</small>
+                    <small>点击播放按钮开始欣赏</small>
                 </div>
             </div>
             
             <div class="file-format-info">
-                支持格式: MP3, WAV, OGG, M4A, AAC 等音频格式 (可多选)
+                支持格式: MP3, WAV, OGG, M4A 等音频格式
             </div>
         </div>
     </div>
 
     <script>
-        // ===== 倒计时功能代码（保持不变）=====
+        // ===== 倒计时功能代码 =====
         let targetDate = new Date('2027-01-30T00:00:00').getTime();
         
         function updateTargetDateDisplay() {
@@ -607,16 +667,15 @@
             document.getElementById('seconds').textContent = seconds.toString().padStart(2, '0');
         }
         
-        // ===== 音乐播放器功能代码（修复版）=====
+        // ===== 音乐播放器功能代码 =====
         class MusicPlayer {
             constructor() {
                 this.audio = new Audio();
-                this.playlist = [];
-                this.currentIndex = 0;
                 this.isPlaying = false;
+                this.isLooping = false;
                 
-                // 默认音频文件
-                this.DEFAULT_AUDIO_FILE = "郝云&倪大红半日闲游Music Video  话剧银锭桥插曲  倪郝ni hao中国第一中老年影视歌三栖搖滾组合.mp3";
+                // 你的音频文件
+                this.AUDIO_FILE = "郝云&倪大红半日闲游Music Video  话剧银锭桥插曲  倪郝ni hao中国第一中老年影视歌三栖搖滾组合.mp3";
                 
                 // DOM 元素
                 this.playBtn = document.getElementById('playBtn');
@@ -634,51 +693,33 @@
                 this.fileInput = document.getElementById('fileInput');
                 this.selectedFileInfo = document.getElementById('selectedFileInfo');
                 
-                // 初始化默认播放列表
-                this.initDefaultPlaylist();
+                // 初始化歌曲信息
+                this.currentSongTitle.textContent = "半日闲游";
+                this.currentSongArtist.textContent = "郝云&倪大红 - 话剧银锭桥插曲";
                 
                 // 绑定事件
                 this.bindEvents();
                 
-                // 加载默认歌曲
-                this.loadDefaultSong();
-            }
-            
-            initDefaultPlaylist() {
-                // 添加默认歌曲到播放列表
-                this.playlist = [{
-                    id: 'default',
-                    title: "半日闲游",
-                    artist: "郝云&倪大红 - 话剧银锭桥插曲",
-                    description: "倪郝(ni hao)中国第一中老年影视歌三栖搖滾组合",
-                    url: this.DEFAULT_AUDIO_FILE,
-                    isDefault: true,
-                    fileName: this.DEFAULT_AUDIO_FILE
-                }];
-                
-                this.updatePlaylistDisplay();
+                // 加载音频
+                this.loadAudio();
             }
             
             bindEvents() {
-                // 播放/暂停按钮
                 this.playBtn.addEventListener('click', () => this.togglePlayPause());
-                
-                // 上一首/下一首
-                this.prevBtn.addEventListener('click', () => this.prevSong());
-                this.nextBtn.addEventListener('click', () => this.nextSong());
-                
-                // 进度条点击
+                this.prevBtn.addEventListener('click', () => this.restartSong());
+                this.nextBtn.addEventListener('click', () => this.restartSong());
                 this.progressContainer.addEventListener('click', (e) => this.setProgress(e));
                 
-                // 音频事件
                 this.audio.addEventListener('timeupdate', () => this.updateProgress());
                 this.audio.addEventListener('loadedmetadata', () => this.updateDuration());
-                this.audio.addEventListener('ended', () => this.nextSong());
+                this.audio.addEventListener('ended', () => {
+                    if (this.isLooping) {
+                        this.restartSong();
+                    }
+                });
                 
-                // 文件选择事件 - 修复的关键！
                 this.fileInput.addEventListener('change', (e) => this.handleFileSelect(e));
                 
-                // 键盘控制
                 document.addEventListener('keydown', (e) => {
                     if (e.code === 'Space') {
                         e.preventDefault();
@@ -687,85 +728,12 @@
                 });
             }
             
-            loadDefaultSong() {
-                // 加载默认歌曲
-                this.audio.src = this.DEFAULT_AUDIO_FILE;
-                this.currentIndex = 0;
-                
-                // 更新UI
-                this.currentSongTitle.textContent = this.playlist[0].title;
-                this.currentSongArtist.textContent = this.playlist[0].artist;
-                
-                this.selectedFileInfo.innerHTML = `
-                    <strong>当前歌曲:</strong><br>
-                    ${this.playlist[0].title} - ${this.playlist[0].artist}<br>
-                    <small>可以添加更多本地音乐文件到播放列表</small>
-                `;
-            }
-            
-            handleFileSelect(event) {
-                const files = event.target.files;
-                if (files.length === 0) return;
-                
-                // 显示选择信息
-                if (files.length === 1) {
-                    this.selectedFileInfo.textContent = `已选择: ${files[0].name}`;
-                } else {
-                    this.selectedFileInfo.textContent = `已选择 ${files.length} 个文件`;
-                }
-                
-                // 添加每个文件到播放列表
-                for (let i = 0; i < files.length; i++) {
-                    this.addSongFromFile(files[i]);
-                }
-                
-                // 更新播放列表显示
-                this.updatePlaylistDisplay();
-                
-                // 清空文件输入框，以便可以再次选择相同的文件
-                event.target.value = '';
-            }
-            
-            addSongFromFile(file) {
-                // 检查文件类型
-                if (!file.type.startsWith('audio/')) {
-                    console.warn(`文件 "${file.name}" 不是音频文件，已跳过`);
-                    return;
-                }
-                
-                // 创建Object URL（本地文件播放的关键）
-                const objectUrl = URL.createObjectURL(file);
-                
-                // 获取文件名（去掉扩展名）
-                let fileName = file.name;
-                const lastDotIndex = fileName.lastIndexOf('.');
-                if (lastDotIndex > 0) {
-                    fileName = fileName.substring(0, lastDotIndex);
-                }
-                
-                // 创建歌曲对象
-                const song = {
-                    id: Date.now() + Math.random(),
-                    title: fileName,
-                    artist: '本地文件',
-                    url: objectUrl,
-                    file: file,
-                    objectUrl: objectUrl,
-                    fileName: file.name,
-                    isLocalFile: true
-                };
-                
-                // 添加到播放列表
-                this.playlist.push(song);
-                
-                // 如果这是添加的第一首本地文件，自动播放
-                if (this.playlist.length === 2 && !this.isPlaying) { // 2因为已经有默认歌曲
-                    this.selectedFileInfo.innerHTML = `
-                        <strong style="color: #4CAF50;">✓ 已成功添加!</strong><br>
-                        ${fileName}<br>
-                        <small>点击播放按钮开始欣赏</small>
-                    `;
-                }
+            loadAudio() {
+                this.audio.src = this.AUDIO_FILE;
+                this.audio.loop = this.isLooping;
+                this.audio.addEventListener('loadedmetadata', () => {
+                    this.updateDuration();
+                });
             }
             
             togglePlayPause() {
@@ -777,11 +745,6 @@
             }
             
             play() {
-                // 如果没有加载歌曲，加载当前歌曲
-                if (this.audio.src === '' && this.playlist.length > 0) {
-                    this.loadSong(this.currentIndex);
-                }
-                
                 this.audio.play().then(() => {
                     this.isPlaying = true;
                     this.playIcon.classList.remove('fa-play');
@@ -789,15 +752,11 @@
                     this.playBtn.title = "暂停";
                 }).catch(error => {
                     console.log('播放错误:', error);
-                    
-                    // 对于默认歌曲，如果播放失败，提示用户
-                    if (this.currentIndex === 0 && this.playlist[0].isDefault) {
-                        this.selectedFileInfo.innerHTML = `
-                            <strong style="color: #f44336;">默认歌曲播放失败!</strong><br>
-                            <small>文件: ${this.DEFAULT_AUDIO_FILE}</small><br>
-                            <small>请添加本地音乐文件或确保默认文件存在</small>
-                        `;
-                    }
+                    this.selectedFileInfo.innerHTML = `
+                        <strong style="color: #f44336;">播放失败!</strong><br>
+                        <small>请检查音频文件路径: ${this.AUDIO_FILE}</small><br>
+                        <small>确保文件与HTML在同一目录</small>
+                    `;
                 });
             }
             
@@ -809,67 +768,23 @@
                 this.playBtn.title = "播放";
             }
             
-            loadSong(index) {
-                if (index < 0 || index >= this.playlist.length) return;
-                
-                const song = this.playlist[index];
-                
-                // 暂停当前播放
-                this.audio.pause();
-                
-                // 设置新的音频源
-                this.audio.src = song.url;
-                this.currentSongTitle.textContent = song.title;
-                this.currentSongArtist.textContent = song.artist;
-                this.currentIndex = index;
-                
-                // 更新播放列表高亮
-                this.updatePlaylistDisplay();
-                
-                // 如果之前正在播放，继续播放新歌曲
+            restartSong() {
+                this.audio.currentTime = 0;
                 if (this.isPlaying) {
-                    this.audio.play().catch(e => {
-                        console.log('切换歌曲播放失败:', e);
-                        this.isPlaying = false;
-                        this.playIcon.classList.remove('fa-pause');
-                        this.playIcon.classList.add('fa-play');
-                    });
+                    this.audio.play();
                 }
-            }
-            
-            prevSong() {
-                if (this.playlist.length <= 1) return;
-                
-                let newIndex = this.currentIndex - 1;
-                if (newIndex < 0) {
-                    newIndex = this.playlist.length - 1;
-                }
-                
-                this.loadSong(newIndex);
-            }
-            
-            nextSong() {
-                if (this.playlist.length <= 1) return;
-                
-                let newIndex = this.currentIndex + 1;
-                if (newIndex >= this.playlist.length) {
-                    newIndex = 0;
-                }
-                
-                this.loadSong(newIndex);
             }
             
             updateProgress() {
                 const { currentTime, duration } = this.audio;
-                if (isNaN(duration) || duration === Infinity) return;
-                
                 const progressPercent = (currentTime / duration) * 100;
+                
                 this.progressBar.style.width = `${progressPercent}%`;
                 this.currentTimeEl.textContent = this.formatTime(currentTime);
             }
             
             updateDuration() {
-                if (!isNaN(this.audio.duration) && this.audio.duration !== Infinity) {
+                if (!isNaN(this.audio.duration)) {
                     this.durationEl.textContent = this.formatTime(this.audio.duration);
                 }
             }
@@ -879,7 +794,7 @@
                 const clickX = e.offsetX;
                 const duration = this.audio.duration;
                 
-                if (!isNaN(duration) && duration !== Infinity) {
+                if (!isNaN(duration)) {
                     this.audio.currentTime = (clickX / width) * duration;
                 }
             }
@@ -892,136 +807,59 @@
                 return `${mins}:${secs.toString().padStart(2, '0')}`;
             }
             
-            updatePlaylistDisplay() {
-                this.playlistItems.innerHTML = '';
+            handleFileSelect(event) {
+                const files = event.target.files;
+                if (files.length === 0) return;
                 
-                if (this.playlist.length === 0) {
-                    this.playlistItems.innerHTML = '<div class="playlist-item empty">播放列表为空，请添加本地音乐文件</div>';
-                    this.playlistCount.textContent = '(0 首歌曲)';
-                    return;
-                }
+                this.selectedFileInfo.innerHTML = `
+                    <strong>已选择 ${files.length} 个文件</strong><br>
+                    <small>但当前播放的仍是: 半日闲游</small><br>
+                    <small>点击播放按钮继续欣赏推荐歌曲</small>
+                `;
                 
-                this.playlistCount.textContent = `(${this.playlist.length} 首歌曲)`;
-                
-                this.playlist.forEach((song, index) => {
-                    const item = document.createElement('div');
-                    item.className = `playlist-item ${index === this.currentIndex ? 'active' : ''}`;
-                    
-                    // 创建歌曲信息
-                    const songInfo = document.createElement('div');
-                    
-                    if (song.isDefault) {
-                        // 默认歌曲 - 特殊样式
-                        songInfo.innerHTML = `
-                            <strong style="color: #4CAF50;">
-                                <i class="fas fa-star"></i> ${song.title}
-                            </strong><br>
-                            <small style="color: #4CAF50;">
-                                <i class="fas fa-user"></i> ${song.artist}<br>
-                                <i class="fas fa-music"></i> ${song.description}
-                            </small>
-                        `;
-                    } else {
-                        // 本地文件歌曲
-                        songInfo.innerHTML = `
-                            <strong>${song.title}</strong><br>
-                            <small>${song.artist} - ${song.fileName}</small>
-                        `;
-                    }
-                    
-                    // 创建操作按钮
-                    const actions = document.createElement('div');
-                    actions.className = 'song-actions';
-                    
-                    // 如果不是默认歌曲，添加删除按钮
-                    if (!song.isDefault) {
-                        const removeBtn = document.createElement('button');
-                        removeBtn.className = 'action-btn delete-btn';
-                        removeBtn.innerHTML = '<i class="fas fa-trash"></i>';
-                        removeBtn.title = "删除";
-                        removeBtn.addEventListener('click', (e) => {
-                            e.stopPropagation();
-                            this.removeSong(index);
-                        });
-                        
-                        actions.appendChild(removeBtn);
-                    }
-                    
-                    item.appendChild(songInfo);
-                    item.appendChild(actions);
-                    
-                    // 点击歌曲项切换歌曲
-                    item.addEventListener('click', () => {
-                        if (index !== this.currentIndex) {
-                            this.loadSong(index);
-                            if (this.isPlaying) {
-                                this.audio.play();
-                            }
-                        }
-                    });
-                    
-                    this.playlistItems.appendChild(item);
-                });
-            }
-            
-            removeSong(index) {
-                if (index < 0 || index >= this.playlist.length) return;
-                
-                const song = this.playlist[index];
-                
-                // 不允许删除默认歌曲
-                if (song.isDefault) {
-                    return;
-                }
-                
-                // 释放Object URL资源
-                if (song.objectUrl) {
-                    URL.revokeObjectURL(song.objectUrl);
-                }
-                
-                // 调整当前索引
-                if (index === this.currentIndex) {
-                    // 如果删除的是当前歌曲，播放下一首或上一首
-                    if (this.playlist.length > 1) {
-                        let newIndex = index > 0 ? index - 1 : 0;
-                        this.loadSong(newIndex);
-                    }
-                } else if (index < this.currentIndex) {
-                    // 如果删除的是当前歌曲前面的歌曲，调整当前索引
-                    this.currentIndex--;
-                }
-                
-                // 从播放列表中移除
-                this.playlist.splice(index, 1);
-                
-                // 更新显示
-                this.updatePlaylistDisplay();
-            }
-            
-            cleanup() {
-                // 释放所有Object URL资源
-                this.playlist.forEach(song => {
-                    if (song.objectUrl && !song.isDefault) {
-                        URL.revokeObjectURL(song.objectUrl);
-                    }
-                });
+                event.target.value = '';
             }
         }
         
-        // ===== 初始化函数 =====
+        // ===== 初始化 =====
         function init() {
-            // 初始化倒计时
             updateTargetDateDisplay();
             updateCountdown();
             setInterval(updateCountdown, 1000);
             
-            // 初始化音乐播放器
             const player = new MusicPlayer();
             
-            // 页面关闭前清理资源
-            window.addEventListener('beforeunload', () => {
-                player.cleanup();
+            // 修改按钮图标为重新开始
+            document.querySelector('#prevBtn i').className = 'fas fa-redo';
+            document.querySelector('#nextBtn i').className = 'fas fa-redo';
+
+            // 循环切换三张背景图片（通过类名切换）
+            const targetDate = document.getElementById('targetDateContainer');
+            // 定义三张图片对应的类名数组（与CSS中定义的一致）
+            const bgClasses = ['bg1', 'bg2', 'bg3'];
+            let currentIndex = 0;
+
+            // 预先加载图片（可选，避免第一次切换加载延迟）
+            bgClasses.forEach((cls, idx) => {
+                const img = new Image();
+                // 根据类名获取图片路径（这里简单写，实际应与CSS中路径一致）
+                // 为简化，可以硬编码路径，或者从CSS中提取
+                // 直接预加载图片即可
+                img.src = `image${idx+1}.png`; // 假设图片名为 image1.png, image2.png, image3.png
             });
+
+            // 设置初始类
+            targetDate.classList.add(bgClasses[0]);
+
+            // 每3秒切换一次
+            setInterval(() => {
+                // 移除当前类
+                targetDate.classList.remove(bgClasses[currentIndex]);
+                // 更新索引
+                currentIndex = (currentIndex + 1) % bgClasses.length;
+                // 添加新类
+                targetDate.classList.add(bgClasses[currentIndex]);
+            }, 3000);
         }
         
         window.addEventListener('DOMContentLoaded', init);
